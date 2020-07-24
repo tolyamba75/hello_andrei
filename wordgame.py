@@ -1,10 +1,11 @@
 class WordGame:
-    def __init__(self, litter):
-        self.litter = litter.lower()
+    def __init__(self, letter):
+        self.ans_opt = ['правильно.', 'слово уже было отгадано.', 'попытайся еще раз.']
+        self.letter = letter.lower()
         self.lst = []
 
     def rules(self, word):
-        if self.litter == word[:1]:
+        if self.letter == word[:1]:
             return True
         return False
 
@@ -13,14 +14,15 @@ class WordGame:
         # угадал
         if self.rules(word) and not(word in self.lst):
             self.lst.append(word)
-            return True
+            return self.ans_opt[0]
         # слово отгадано
         elif self.rules(word):
-            return None
+            return self.ans_opt[1]
         # не корректный ответ
         else:
-            return False
+            return self.ans_opt[2]
 
     def game_over(self):
-        self.litter = ' '
+        self.letter = ' '
         return self.lst
+
