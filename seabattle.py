@@ -1,5 +1,6 @@
 class SeaBattle:
     def __init__(self, win_lst):
+        self.ans_opt = ['ранил.', 'мимо.', 'попытайся еще раз.']
         self.win_lst = win_lst
         self.FIELD = ['а1', 'а2', 'а3', 'а4', 'а5', 'а6', 'а7', 'а8', 'а9', 'а10',
                       'б1', 'б2', 'б3', 'б4', 'б5', 'б6', 'б7', 'б8', 'б9', 'б10',
@@ -14,19 +15,20 @@ class SeaBattle:
 
     def answer(self, hit):
         hit = hit.lower().split()[0]
-        # попал
+
         if hit in self.win_lst:
             self.win_lst.remove(hit)
-            return True
-        # промазал
+            return self.ans_opt[0]
+
         elif hit in self.FIELD:
-            return None
-        # не корректный ответ
+            return self.ans_opt[1]
+
         else:
-            return False
+            return self.ans_opt[2]
 
     def game_over(self):
         rem = self.win_lst
         self.win_lst = []
         self.FIELD = []
         return rem
+
