@@ -24,3 +24,8 @@ class VkProcess:
             return True
         else:
             return False
+    
+    def check_name(self, users_id):
+        name = self.vk.users.get(user_ids=users_id)[0]['first_name']
+        return name
+
