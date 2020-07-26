@@ -43,7 +43,7 @@ class MiniGame:
         lst.sort(key=lambda i: i[1])
         user_name = self.vk_tool.check_name(lst[-1][0])
         messages = 'Первое место: [id{user_id}|{name}],' \
-                   ' количество правильных ответов: {num}'.format(user_id=lst[-1][0], name=user_name, num=[-1][1])
+                   ' количество правильных ответов: {num}'.format(user_id=lst[-1][0], name=user_name, num=lst[-1][1])
         return messages
 
 
