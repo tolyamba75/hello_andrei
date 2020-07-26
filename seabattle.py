@@ -1,34 +1,36 @@
+import re
+
+
 class SeaBattle:
     def __init__(self, win_lst):
         self.ans_opt = ['ранил.', 'мимо.', 'попытайся еще раз.']
         self.win_lst = win_lst
-        self.FIELD = ['а1', 'а2', 'а3', 'а4', 'а5', 'а6', 'а7', 'а8', 'а9', 'а10',
-                      'б1', 'б2', 'б3', 'б4', 'б5', 'б6', 'б7', 'б8', 'б9', 'б10',
-                      'в1', 'в2', 'в3', 'в4', 'в5', 'в6', 'в7', 'в8', 'в9', 'в10',
-                      'г1', 'г2', 'г3', 'г4', 'г5', 'г6', 'г7', 'г8', 'г9', 'г10',
-                      'д1', 'д2', 'д3', 'д4', 'д5', 'д6', 'д7', 'д8', 'д9', 'д10',
-                      'е1', 'е2', 'е3', 'е4', 'е5', 'е6', 'е7', 'е8', 'е9', 'е10',
-                      'ж1', 'ж2', 'ж3', 'ж4', 'ж5', 'ж6', 'ж7', 'ж8', 'ж9', 'ж10',
-                      'з1', 'з2', 'з3', 'з4', 'з5', 'з6', 'з7', 'з8', 'з9', 'з10',
-                      'и1', 'и2', 'и3', 'и4', 'и5', 'и6', 'и7', 'и8', 'и9', 'и10',
-                      'к1', 'к2', 'к3', 'к4', 'к5', 'к6', 'к7', 'к8', 'к9', 'к10']
+        self.lst_part = {}
+        # range(1, 11)
+        self.lst_let = list('абвгдежзик')
+        self.lst_num = list(range(1, 11))
+        # [i+str(j) for i in list('абвгдежзик') for j in range(1, 11)]
 
-    def answer(self, hit):
+    def answer(self, hit, user_id):
         hit = hit.lower().split()[0]
 
         if hit in self.win_lst:
             self.win_lst.remove(hit)
+            self.lst_part[user_id] = hit
             return self.ans_opt[0]
 
-        elif hit in self.FIELD:
-            return self.ans_opt[1]
-
         else:
-            return self.ans_opt[2]
+            try:
+                re.search(r'\b{let}{one}\d\d?\b'.format(let=self.lst_let, num=self.lst_num, one='{1}'), hit).group()
+                return self.ans_opt[1]
+            except AttributeError:
+                return self.ans_opt[2]
 
     def game_over(self):
         rem = self.win_lst
         self.win_lst = []
-        self.FIELD = []
         return rem
+
+    def win(self):
+        return self.lst_part
 
